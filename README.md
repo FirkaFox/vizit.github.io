@@ -1,1 +1,512 @@
-# vizit.github.io
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>В разработке</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;800&family=Oswald:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: #fff;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            background: url('https://images.pexels.com/photos/1169754/pexels-photo-1169754.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=1920&w=1080') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00d4ff;
+            text-shadow: 0 0 10px #00d4ff;
+            letter-spacing: 1px;
+        }
+
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 30px;
+            font-weight: 400;
+            transition: 0.3s;
+            border-bottom: 1px solid transparent;
+            padding-bottom: 5px;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+        }
+
+        .nav a:hover {
+            border-bottom-color: #00d4ff;
+            color: #00d4ff;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 100px 0 80px;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .neon-text {
+            color: #6d5dfc;
+            text-shadow: 0 0 10px #6d5dfc, 0 0 20px #6d5dfc;
+        }
+
+        .signature {
+            margin: 20px 0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: 300;
+            font-style: italic;
+            color: #b0b0ff;
+            opacity: 0.9;
+            letter-spacing: 2px;
+            border-bottom: 1px dashed rgba(255,255,255,0.3);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 30px auto;
+            line-height: 1.6;
+            color: #ddd;
+            font-weight: 300;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: transparent;
+            border: 2px solid #00d4ff;
+            color: #00d4ff;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-weight: 600;
+            letter-spacing: 2px;
+            border-radius: 30px;
+            transition: 0.3s;
+            box-shadow: 0 0 15px rgba(0,212,255,0.3);
+            margin-top: 20px;
+            font-size: 1rem;
+        }
+
+        .cta-button:hover {
+            background: #00d4ff;
+            color: #0a0f1a;
+            box-shadow: 0 0 30px #00d4ff;
+        }
+
+        .projects {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 60px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            color: #fff;
+            text-shadow: 0 0 5px #6d5dfc;
+            text-transform: uppercase;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        /* Базовый класс карточки с flex-вертикалью для выравнивания */
+        .project-card {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 15px;
+            padding: 25px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            color: #eee;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .project-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .project-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .project-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .project-card p {
+            color: #ccc;
+            margin-bottom: 20px;
+            line-height: 1.5;
+            font-weight: 300;
+            flex-grow: 1; /* описание занимает всё свободное пространство */
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .project-tags span {
+            border-radius: 20px;
+            padding: 5px 15px;
+            font-size: 0.8rem;
+            font-weight: 400;
+        }
+
+        .project-link {
+            color: #fff;
+            text-decoration: none;
+            border-bottom: 1px dashed #6d5dfc;
+            padding-bottom: 3px;
+            transition: 0.3s;
+            font-weight: 400;
+            align-self: flex-start; /* ссылка не растягивается */
+        }
+
+        .project-link:hover {
+            color: #6d5dfc;
+            border-bottom-color: #fff;
+        }
+
+        /* ===== КАРТОЧКА 1: МИЛИТАРИ (МУЛЬТИКАМ) ===== */
+        .project-card.military {
+            background: 
+                radial-gradient(circle at 20% 30%, #7d8f69 8%, transparent 20%),
+                radial-gradient(circle at 80% 70%, #6b4f3c 10%, transparent 22%),
+                radial-gradient(circle at 40% 80%, #4b5d3c 12%, transparent 25%),
+                radial-gradient(circle at 70% 20%, #c4a27a 7%, transparent 18%),
+                radial-gradient(circle at 10% 60%, #2f3a24 15%, transparent 30%),
+                linear-gradient(145deg, #1f2a17, #141e10);
+            background-blend-mode: overlay, overlay, overlay, overlay, overlay, normal;
+            border: 2px solid #6b8e23;
+            box-shadow: 0 0 20px #4b5d3c, 0 0 30px #2f3a24;
+            font-family: 'Oswald', sans-serif;
+        }
+
+        .project-card.military::before {
+            background: repeating-radial-gradient(circle at 30% 30%, rgba(255,255,240,0.1) 1px, transparent 2px);
+            background-size: 10px 10px;
+        }
+
+        .project-card.military h3 {
+            color: #e6d5a8;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-bottom: 2px solid #b8860b;
+            padding-bottom: 10px;
+            text-shadow: 0 0 5px #b8860b;
+        }
+
+        .project-card.military p {
+            color: #d9cdb3;
+        }
+
+        .project-card.military .project-tags span {
+            background: #5e5a3c;
+            border: 1px solid #b8860b;
+            color: #f5e6b3;
+            font-weight: 600;
+        }
+
+        .project-card.military .project-link {
+            color: #f0e68c;
+            border-bottom-color: #b8860b;
+        }
+
+        .project-card.military .project-link:hover {
+            color: #ffd700;
+            border-bottom-color: #fff;
+        }
+
+        /* ===== КАРТОЧКА 2: SCI-FI (В СТИЛЕ 3, С ИСХОДНЫМИ ЦВЕТАМИ) ===== */
+        .project-card.space {
+            background: linear-gradient(145deg, #0c1b33, #051023);
+            border: 2px solid #00d4ff;
+            box-shadow: 0 0 20px #0077be, 0 0 30px #003366;
+        }
+
+        .project-card.space::before {
+            background: repeating-linear-gradient(45deg, rgba(0,212,255,0.12) 0px, rgba(0,212,255,0.12) 2px, transparent 2px, transparent 8px);
+        }
+
+        .project-card.space h3 {
+            color: #00d4ff;
+            text-shadow: 0 0 8px #0077be, 0 0 15px #00aaff;
+            border-bottom: 1px solid #00d4ff;
+            padding-bottom: 10px;
+        }
+
+        .project-card.space p {
+            color: #b0e0ff;
+        }
+
+        .project-card.space .project-tags span {
+            background: #0a2a4a;
+            border: 1px solid #00d4ff;
+            color: #a0d0ff;
+        }
+
+        .project-card.space .project-link {
+            color: #00d4ff;
+            border-bottom-color: #0077be;
+        }
+
+        .project-card.space .project-link:hover {
+            color: #ffffff;
+            border-bottom-color: #00d4ff;
+            text-shadow: 0 0 8px #00d4ff;
+        }
+
+        /* ===== КАРТОЧКА 3: ДАРК ФЭНТЕЗИ ===== */
+        .project-card.dark-fantasy {
+            background: linear-gradient(145deg, #1a0b0b, #0d0505);
+            border: 2px solid #6b0f0f;
+            box-shadow: 0 0 25px #8b0000, 0 0 40px #2a0000;
+        }
+
+        .project-card.dark-fantasy::before {
+            background: repeating-linear-gradient(45deg, rgba(139,0,0,0.1) 0px, rgba(139,0,0,0.1) 2px, transparent 2px, transparent 6px);
+        }
+
+        .project-card.dark-fantasy h3 {
+            color: #b33a3a;
+            text-shadow: 0 0 8px #8b0000, 2px 2px 0 #2f0f0f;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            border-bottom: 1px solid #5f1f1f;
+            padding-bottom: 10px;
+        }
+
+        .project-card.dark-fantasy p {
+            color: #bba8a8;
+        }
+
+        .project-card.dark-fantasy .project-tags span {
+            background: #2c0e0e;
+            border: 1px solid #8b1a1a;
+            color: #d4a1a1;
+            box-shadow: inset 0 0 5px #4a1010;
+        }
+
+        .project-card.dark-fantasy .project-link {
+            color: #b87373;
+            border-bottom-color: #8b0000;
+        }
+
+        .project-card.dark-fantasy .project-link:hover {
+            color: #ff5555;
+            border-bottom-color: #fff;
+            text-shadow: 0 0 8px red;
+        }
+
+        .view-all {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .view-all a {
+            color: #00d4ff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            border: 1px solid #00d4ff;
+            padding: 10px 30px;
+            border-radius: 30px;
+            transition: 0.3s;
+            text-transform: uppercase;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .view-all a:hover {
+            background: #00d4ff;
+            color: #0a0f1a;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid rgba(255,255,255,0.2);
+            color: #aaa;
+            font-size: 0.9rem;
+            font-weight: 300;
+        }
+
+        .social-links {
+            margin-bottom: 20px;
+        }
+
+        .social-links a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1rem;
+            transition: 0.3s;
+            text-transform: uppercase;
+            font-weight: 400;
+            letter-spacing: 1px;
+        }
+
+        .social-links a:hover {
+            color: #00d4ff;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .signature {
+                font-size: 1.5rem;
+            }
+            .nav a {
+                margin-left: 15px;
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <header>
+            <div class="logo"><img src="image/i (9).png" alt="чвк фырка" width="100" height="100"></div>
+            <nav class="nav">
+                <a href="#">Главная</a>
+                <a href="#">Проекты</a>
+                <a href="#">О себе</a>
+                <a href="#">Контакты</a>
+            </nav>
+        </header>
+
+        <section class="hero">
+            <h1 class="hero-title">Привет, я <span class="neon-text">Фырка</span></h1>
+            <p class="hero-description">
+                Я занимлася организацией и проведением ролевых игр. Этот "сайт" создан как архив моих проектов(возможно я буду его дополнять и тут вы сможете увидеть то, что не увидело свет).
+            </p>
+            <a href="#projects" class="cta-button">Смотреть проекты</a>
+        </section>
+
+        <section class="projects" id="projects">
+            <h2 class="section-title">Избранные проекты</h2>
+            <div class="projects-grid">
+                <!-- Карточка 1: Милитари (Мультикам) -->
+                <div class="project-card military">
+                    <h3>Forest Wars</h3>
+                    <p>Самое первое RP которое было создано. Направление - восток! Всемирная угроза терроризма, вы одна из армий мира, что встала на пути его уничтожения. <p>
+                    <div class="project-tags">
+                        <span>Garry's Mod</span>
+                        <span>боевые действия</span>
+                        <span>Medium</span>
+                    </div>
+                    <a href="#" class="project-link">Подробнее →</a>
+                </div>
+                <!-- Карточка 2: Sci-Fi (в стиле 3, цвета сохранены) -->
+                <div class="project-card space">
+                    <h3>SCI-FI GRPD</h3>
+                    <p>Научная фантастика. Самое масштабное RP из проведенных, с самым большим лором, ~6 месяцев игры. Какого это оказаться в мире далкого будущего и понять, что все стало безчеловечным? По крайней мере у людей так.</p>
+                    <div class="project-tags">
+                        <span>Garry's Mod</span>
+                        <span>Тектовое RP</span>
+                        <span>Sci-Fi</span>
+                    </div>
+                    <a href="#" class="project-link">Подробнее →</a>
+                </div>
+                <!-- Карточка 3: Дарк Фэнтези -->
+                <div class="project-card dark-fantasy">
+                    <h3>Dark horizon: lost world</h3>
+                    <p>RP в стиле dark fantasy. Здесь мог бы быть рай, если бы к нему не приложили руку демоны, ангелы и боги. RP рассказывает о архепилагии "Nirn" где вы и оказались...</p>
+                    <div class="project-tags">
+                        <span>Тектовое RP</span>
+                        <span>Фэнтези</span>
+                        <span>Hard</span>
+                    </div>
+                    <a href="#" class="project-link">Подробнее →</a>
+                </div>
+            </div>
+            <div class="view-all">
+                <a href="#">Все проекты →</a>
+            </div>
+        </section>
+
+        <footer>
+            <div class="social-links">
+                <a href="https://vk.com/zachem_ti_eto_chitaesch">ВКоньТакте</a>
+                <a href="https://discordapp.com/users/452015937718321153">Discord</a>
+                <a href="t.me/Firka7">Telegram</a>
+                <a href="https://www.youtube.com/@Firka2216/videos">YouYube</a>
+            </div>
+            <p>© 2026. Владимир Алюминий. Все права не защищены.</p>
+            <p>Сделано с ненавистью к себе.</p>
+        </footer>
+    </div>
+</body>
+</html>
